@@ -1,0 +1,31 @@
+ # Name of this workflow (appears in GitHub Actions tab)
+name: Tests
+
+# When to run this workflow: on every push and pull request
+on: [push, pull_request]
+
+# Jobs to run (can have multiple jobs)
+jobs:
+  # Job name: "test"
+  test:
+    # Run on Ubuntu Linux (free from GitHub)
+    runs-on: ubuntu-latest
+    
+    # Steps to execute in sequence
+    steps:
+      # Step 1: Checkout your code from repository
+      - uses: actions/checkout@v2
+      
+      # Step 2: Set up Python environment
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'  # Use Python 3.11
+      
+      # Step 3: Install dependencies from requirements.txt
+      - run: pip install -r requirements.txt
+      
+      # Step 4: Install testing dependencies
+      - run: pip install pytest pytest-asyncio
+      
+      # Step 5: Run your tests
+      - run: python -m pytest
